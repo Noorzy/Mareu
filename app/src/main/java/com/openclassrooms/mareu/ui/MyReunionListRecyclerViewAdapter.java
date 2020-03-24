@@ -1,6 +1,8 @@
 package com.openclassrooms.mareu.ui;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -15,8 +17,7 @@ import com.openclassrooms.mareu.models.Reunion;
 import java.util.List;
 
 
-public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReunionListRecyclerViewAdapter.MyViewHolder> {
-    //String data1[], data2[];
+public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReunionListRecyclerViewAdapter.MyViewHolder>   {
     Context context;
     private final List<Reunion> mReunions;
 
@@ -44,10 +45,14 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         holder.nomReunion.setText(reunion.getName()+" -");
         holder.nomSalle.setText("salle "+ reunion.getRoom()+" -");
         holder.emails.setText(reunion.getEmails());
+        holder.myRowLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
-        //holder.nomReunion.setText(data1[position]);
-        //holder.nomSalle.setText(data2[position]);
 
     }
 
@@ -57,8 +62,11 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
     }
 
 
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView nomReunion, nomSalle , emails;
+        ConstraintLayout myRowLayout;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -66,6 +74,8 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             nomReunion = itemView.findViewById(R.id.nom_reunion);
             nomSalle = itemView.findViewById(R.id.salle_reunion);
             emails = itemView.findViewById(R.id.textview_email_list);
+            myRowLayout = itemView.findViewById(R.id.my_row_layout);
+
 
         }
     }

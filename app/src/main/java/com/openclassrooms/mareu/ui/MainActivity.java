@@ -1,13 +1,11 @@
 package com.openclassrooms.mareu.ui;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.Context;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
+
 import android.view.View;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
+
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.mareu.DI.DI;
@@ -18,33 +16,29 @@ import com.openclassrooms.mareu.service.ReunionApiService;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
+
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
-import java.util.Calendar;
+
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class MainActivity extends AppCompatActivity  {
 
     private ReunionApiService mApiService;
     private List<Reunion> mReunions;
     private MyReunionListRecyclerViewAdapter adapter;
+    private Reunion newReunion;
 
     public SharedViewModel viewModel;
 
-    private RecyclerView recyclerview;
-    public String Date = null;
-    public String Time = null;
+    public RecyclerView recyclerview;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter = new MyReunionListRecyclerViewAdapter(this,mReunions);
-        adapter.notifyDataSetChanged();
-    }
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,46 +61,32 @@ public class MainActivity extends AppCompatActivity  implements DatePickerDialog
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showForm();
+                Intent creationActivity = new Intent(v.getContext() , CreationActivity.class);
+                startActivity(creationActivity);
 
             }
         });
 
     }
 
-    public void showForm(){
-        FormDialog formDialog = FormDialog.newInstance(Time,Date);
-        formDialog.show(getSupportFragmentManager(), "Form Dialog");
-
-    }
-    public String checkDigit(int number) {
-        return number <= 9 ? "0" + number : String.valueOf(number);
-    }
-
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-        Date= currentDateString;
-        viewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
-        viewModel.setDate(Date);
+    protected void onStart() {
+        super.onStart();
+        newReunion = getIntent().getParcelableExtra("new_meeting");
+        if (newReunion != null) {
+            mReunions.add(newReunion);
+        }
+        MyReunionListRecyclerViewAdapter myAdapter = new MyReunionListRecyclerViewAdapter(this, mReunions);
+        recyclerview.setAdapter(myAdapter);
+
+
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Time = checkDigit(hourOfDay) + "H"+ checkDigit(minute);
-        viewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
-        viewModel.setTime(Time);
-    }
-
-    //private void initList(){
-   //    mReunions = mApiService.getReunions();
-   //    recyclerview.setAdapter(new MyReunionListRecyclerViewAdapter(this, mReunions));
-   //
 
 
-   //}
+ //   public void initList(){
+ //      mReunions = mApiService.getReunions();
+ //      recyclerview.setAdapter(new MyReunionListRecyclerViewAdapter(this, mReunions));
+ //
+ //  }
 }

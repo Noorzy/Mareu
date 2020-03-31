@@ -7,13 +7,14 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/editText_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="17"
         android:hint="Nom de la Reunion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,8 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        app:layout_constraintStart_toEndOf="@+id/editText4"
-        app:layout_constraintTop_toTopOf="@+id/editText4" />
+        app:layout_constraintStart_toEndOf="@+id/editText_name"
+        app:layout_constraintTop_toTopOf="@+id/editText_name" />
 
     <EditText
         android:id="@+id/editText_date"
@@ -35,8 +36,8 @@
         android:inputType="date"
         android:hint="Date"
         android:focusable="false"
-        app:layout_constraintStart_toStartOf="@+id/editText4"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintStart_toStartOf="@+id/editText_name"
+        app:layout_constraintTop_toBottomOf="@+id/editText_name" />
 
     <EditText
         android:id="@+id/editText_time"
@@ -49,5 +50,44 @@
         android:focusable="false"
         app:layout_constraintStart_toStartOf="@+id/editText_date"
         app:layout_constraintTop_toBottomOf="@+id/editText_date" />
+
+    <EditText
+        android:id="@+id/editText_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email Participant"
+        app:layout_constraintStart_toStartOf="@+id/editText_time"
+        app:layout_constraintTop_toBottomOf="@+id/editText_time" />
+
+    <TextView
+        android:id="@+id/textView_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="gege.lebeau@gmail.com , adrien@gmail.com , caro@hotmail.fr "
+        app:layout_constraintStart_toStartOf="@+id/editText_email"
+        app:layout_constraintTop_toBottomOf="@+id/textView_validator" />
+
+    <ImageButton
+        android:id="@+id/imageButton_add_email"
+        android:layout_width="36dp"
+        android:layout_height="44dp"
+        android:background="@null"
+        app:layout_constraintStart_toEndOf="@+id/editText_email"
+        app:layout_constraintTop_toTopOf="@+id/editText_email"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <TextView
+        android:id="@+id/textView_validator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#cc0000"
+        app:layout_constraintEnd_toEndOf="@+id/editText_email"
+        app:layout_constraintStart_toStartOf="@+id/editText_email"
+        app:layout_constraintTop_toBottomOf="@+id/editText_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

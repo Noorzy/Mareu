@@ -2,11 +2,11 @@ package com.openclassrooms.mareu.ui;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,7 +18,6 @@ import com.openclassrooms.mareu.service.ReunionApiService;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,16 +31,20 @@ public class MainActivity extends AppCompatActivity  implements DatePickerDialog
 
     private ReunionApiService mApiService;
     private List<Reunion> mReunions;
+    private MyReunionListRecyclerViewAdapter adapter;
 
     public SharedViewModel viewModel;
 
     private RecyclerView recyclerview;
-    private String nomReunion[] , nomSalle[];
     public String Date = null;
     public String Time = null;
 
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter = new MyReunionListRecyclerViewAdapter(this,mReunions);
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +73,7 @@ public class MainActivity extends AppCompatActivity  implements DatePickerDialog
         });
 
     }
-    public  void showDetail(){
-        DetailFragmentDialog detailDialog = new DetailFragmentDialog();
-        detailDialog.show(getSupportFragmentManager() , "detail Dialog");
-    }
+
     public void showForm(){
         FormDialog formDialog = FormDialog.newInstance(Time,Date);
         formDialog.show(getSupportFragmentManager(), "Form Dialog");
@@ -100,8 +100,6 @@ public class MainActivity extends AppCompatActivity  implements DatePickerDialog
         Time = checkDigit(hourOfDay) + "H"+ checkDigit(minute);
         viewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
         viewModel.setTime(Time);
-
-
     }
 
     //private void initList(){

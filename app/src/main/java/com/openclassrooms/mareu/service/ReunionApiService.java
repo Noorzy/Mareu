@@ -10,4 +10,11 @@ public interface ReunionApiService {
      */
     List<Reunion> getReunions();
 
+    /**
+     * @param reunion
+     */
+    void deleteReunion(Reunion reunion);
+
+    void addReunion(Reunion reunion);
+
 }

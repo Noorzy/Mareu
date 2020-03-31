@@ -2,11 +2,10 @@ package com.openclassrooms.mareu.ui;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 
-import java.sql.Time;
+
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;

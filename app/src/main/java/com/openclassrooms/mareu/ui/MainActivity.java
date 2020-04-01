@@ -4,7 +4,11 @@ package com.openclassrooms.mareu.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,10 +39,24 @@ public class MainActivity extends AppCompatActivity  {
 
     public RecyclerView recyclerview;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main , menu);
+        return true;
+    }
 
-
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.filterButton){
+            Toast.makeText(this,"Filter Button Clicked",  Toast.LENGTH_SHORT).show();
+            Intent filterActivity = new Intent(this, FilterActivity.class);
+            startActivity(filterActivity);
+        }else{
+            return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

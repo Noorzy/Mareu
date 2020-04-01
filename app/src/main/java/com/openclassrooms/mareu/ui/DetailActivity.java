@@ -17,7 +17,7 @@ public class DetailActivity extends AppCompatActivity {
     public TextView detailDate;
     public TextView detailTime;
     public TextView detailEmails;
-    public ImageButton detailBackButton;
+
 
     @Override
     public void onBackPressed() {
@@ -27,6 +27,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_detail);
         selectedMeeting = getIntent().getParcelableExtra("selectedMeeting");
         detailNom = (TextView) findViewById(R.id.textView_detail_nom);
@@ -39,12 +40,6 @@ public class DetailActivity extends AppCompatActivity {
         detailDate.setText(selectedMeeting.getDate());
         detailTime.setText(selectedMeeting.getTime());
         detailEmails.setText(selectedMeeting.getEmails());
-        detailBackButton = (ImageButton) findViewById(R.id.imageButton_detail_back);
-        detailBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
     }
 }

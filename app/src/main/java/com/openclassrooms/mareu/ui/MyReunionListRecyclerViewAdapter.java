@@ -1,15 +1,18 @@
 package com.openclassrooms.mareu.ui;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,19 +21,29 @@ import com.openclassrooms.mareu.R;
 import com.openclassrooms.mareu.models.Reunion;
 import com.openclassrooms.mareu.service.ReunionApiService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReunionListRecyclerViewAdapter.MyViewHolder> {
+public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReunionListRecyclerViewAdapter.MyViewHolder> implements Filterable {
     Context context;
-    private final List<Reunion> mReunions;
+    public List<Reunion> mReunions;
+    private  List<Reunion> reunionsFull;
     private ReunionApiService mApiService;
+
+
+
 
 
     public MyReunionListRecyclerViewAdapter(Context ct, List<Reunion> items) {
         context = ct;
         mReunions = items;
         mApiService = DI.getReunionApiService();
+        reunionsFull = new ArrayList<>(mReunions);
+        Log.d("RecyclerViewAdapter", "Constructor Called");
+
+
+
 
 
     }
@@ -43,11 +56,14 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         View view = inflater.inflate(R.layout.my_row, parent, false);
 
 
+
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+
+
         final Reunion reunion = mReunions.get(position);
         holder.nomReunion.setText(reunion.getName() + " -");
         holder.nomSalle.setText( reunion.getRoom() + " -");
@@ -67,8 +83,14 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
                 mApiService.deleteReunion(reunion);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, getItemCount());
+                //reunionsFull = new ArrayList<>(mReunions);
+                UpdateData(mApiService.getReunions());
+                UpdateReunionsfull(mApiService.getReunions());
             }
         });
+
+        Log.d("tag2", "mReunions size= "+ mReunions.size());
+        Log.d("tag", "ReunionsFull size= "+ reunionsFull.size());
 
 
     }
@@ -78,11 +100,45 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         return mReunions.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return reunionsFilter;
+    }
+
+    private Filter reunionsFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Reunion> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0){
+                filteredList.addAll(reunionsFull);
+            }else{
+                String filterPattern = constraint.toString().toLowerCase();
+                for (Reunion item : reunionsFull){
+                    if (item.getRoom().toLowerCase().matches(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mReunions.clear();
+            mReunions.addAll((List)results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView nomReunion, nomSalle, timeReunion, emails;
         ConstraintLayout myRowLayout;
         ImageButton imageButtonDelete;
+        CardView myRowCardview;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -93,9 +149,23 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             emails = itemView.findViewById(R.id.textview_email_list);
             myRowLayout = itemView.findViewById(R.id.my_row_layout);
             imageButtonDelete = itemView.findViewById(R.id.imageButton_delete);
+            myRowCardview = itemView.findViewById(R.id.my_row_cardview);
 
 
         }
+    }
+    public void UpdateData(List<Reunion> data){
+        mReunions = new ArrayList<>();
+        mReunions.addAll(data);
+        notifyDataSetChanged();
+
+
+    }
+    public void UpdateReunionsfull(List<Reunion> data){
+        reunionsFull = new ArrayList<>();
+        reunionsFull.addAll(data);
+        notifyDataSetChanged();
+
     }
 }
 

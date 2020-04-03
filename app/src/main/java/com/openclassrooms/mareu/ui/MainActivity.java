@@ -1,13 +1,16 @@
 package com.openclassrooms.mareu.ui;
 
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 
@@ -21,23 +24,31 @@ import com.openclassrooms.mareu.service.ReunionApiService;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private ReunionApiService mApiService;
     private List<Reunion> mReunions;
+    public List<Reunion> reunionsFull;
     private MyReunionListRecyclerViewAdapter adapter;
     private Reunion newReunion;
+    private String filterString;
+    private String temp;
+    public MyReunionListRecyclerViewAdapter myAdapter;
 
     public SharedViewModel viewModel;
 
     public RecyclerView recyclerview;
+    public DateFilterDialog dateDialog;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,15 +59,25 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.filterButton){
-            Toast.makeText(this,"Filter Button Clicked",  Toast.LENGTH_SHORT).show();
-            Intent filterActivity = new Intent(this, FilterActivity.class);
-            startActivity(filterActivity);
-        }else{
-            return super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.filter_by_room:
+                Toast.makeText(this,"Filtre par salle",  Toast.LENGTH_SHORT).show();
+                dateDialog.show(getSupportFragmentManager(),"date dialog");
+                return true;
+            case R.id.filter_by_date:
+                Toast.makeText(this,"Filtre par date",  Toast.LENGTH_SHORT).show();
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+                return true;
+
+            default: return super.onOptionsItemSelected(item);
+
         }
-        return super.onOptionsItemSelected(item);
+
+
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +91,9 @@ public class MainActivity extends AppCompatActivity  {
         recyclerview = (RecyclerView) findViewById(R.id.My_recyclerView);
         mReunions = mApiService.getReunions();
 
-        MyReunionListRecyclerViewAdapter myAdapter = new MyReunionListRecyclerViewAdapter(this, mReunions);
+
+
+        myAdapter = new MyReunionListRecyclerViewAdapter(this, mReunions);
         recyclerview.setAdapter(myAdapter);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.addItemDecoration(new DividerItemDecoration(recyclerview.getContext(), DividerItemDecoration.VERTICAL));
@@ -84,6 +107,12 @@ public class MainActivity extends AppCompatActivity  {
 
             }
         });
+        Log.d("onCreate", "onCreate Main activity called");
+
+        dateDialog = new DateFilterDialog();
+
+
+
 
     }
 
@@ -93,18 +122,39 @@ public class MainActivity extends AppCompatActivity  {
         newReunion = getIntent().getParcelableExtra("new_meeting");
         if (newReunion != null) {
             mReunions.add(newReunion);
+            myAdapter.UpdateData(mReunions);
+            myAdapter.UpdateReunionsfull(mReunions);
+            newReunion = null;
         }
-        MyReunionListRecyclerViewAdapter myAdapter = new MyReunionListRecyclerViewAdapter(this, mReunions);
-        recyclerview.setAdapter(myAdapter);
+        Log.d("tag3", "mReunions MainActivity size= "+ mReunions.size());
+
+        temp = getIntent().getStringExtra("filter_text");
+
+        Log.d("tag4", "temp = "+ temp);
+
+      // if (temp == null){
+      //     myAdapter.UpdateData(mReunions);
+      // }
+
+
+        myAdapter.getFilter().filter(temp);
+        myAdapter.notifyDataSetChanged();
+
+
 
 
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+    }
 
 
- //   public void initList(){
+    //   public void initList(){
  //      mReunions = mApiService.getReunions();
  //      recyclerview.setAdapter(new MyReunionListRecyclerViewAdapter(this, mReunions));
  //
  //  }
+
 }

@@ -1,8 +1,10 @@
 package com.openclassrooms.mareu.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
+import android.transition.Fade;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ public class DetailActivity extends AppCompatActivity {
     public TextView detailDate;
     public TextView detailTime;
     public TextView detailEmails;
-
+    public CardView detailCardview;
 
     @Override
     public void onBackPressed() {
@@ -35,11 +37,17 @@ public class DetailActivity extends AppCompatActivity {
         detailDate = (TextView) findViewById(R.id.textView_detail_date);
         detailTime = (TextView) findViewById(R.id.textView_detail_time);
         detailEmails = (TextView) findViewById(R.id.textView_detail_emails);
+        detailCardview = (CardView) findViewById(R.id.detail_cardview);
         detailNom.setText(selectedMeeting.getName());
         detailRoom.setText(selectedMeeting.getRoom());
         detailDate.setText(selectedMeeting.getDate());
         detailTime.setText(selectedMeeting.getTime());
         detailEmails.setText(selectedMeeting.getEmails());
+
+
+
+
+
 
     }
 }

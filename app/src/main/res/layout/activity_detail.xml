@@ -6,59 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".ui.DetailActivity">
 
-    <TextView
-        android:id="@+id/textView_detail_nom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="88dp"
-        android:text="nom de la reunion"
-        android:textSize="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView_detail_room"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="salle"
-        android:textSize="24dp"
-        app:layout_constraintStart_toStartOf="@+id/textView_detail_nom"
-        app:layout_constraintTop_toBottomOf="@+id/textView_detail_nom" />
-
-    <TextView
-        android:id="@+id/textView_detail_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Date"
-        android:textSize="24dp"
-        app:layout_constraintStart_toStartOf="@+id/textView_detail_room"
-        app:layout_constraintTop_toBottomOf="@+id/textView_detail_room" />
-
-    <TextView
-        android:id="@+id/textView_detail_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="heure"
-        android:textSize="24dp"
-        app:layout_constraintStart_toStartOf="@+id/textView_detail_date"
-        app:layout_constraintTop_toBottomOf="@+id/textView_detail_date" />
-
-    <TextView
-        android:id="@+id/textView_detail_emails"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detail_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"
-        android:breakStrategy="high_quality"
-        android:text="emails participants"
-        android:textSize="16dp"
-        app:layout_constraintStart_toStartOf="@+id/textView_detail_time"
-        app:layout_constraintTop_toBottomOf="@+id/textView_detail_time" />
+        android:layout_marginTop="128dp"
+        android:transitionName="detail_transition"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="20dp">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView_detail_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="salle"
+                android:textSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/textView_detail_nom"
+                app:layout_constraintTop_toBottomOf="@+id/textView_detail_nom" />
+
+            <TextView
+                android:id="@+id/textView_detail_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Date"
+                android:textSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/textView_detail_room"
+                app:layout_constraintTop_toBottomOf="@+id/textView_detail_room" />
+
+            <TextView
+                android:id="@+id/textView_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="heure"
+                android:textSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/textView_detail_date"
+                app:layout_constraintTop_toBottomOf="@+id/textView_detail_date" />
+
+            <TextView
+                android:id="@+id/textView_detail_emails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="84dp"
+                android:breakStrategy="high_quality"
+                android:text="emails participants"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_detail_time"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <TextView
+                android:id="@+id/textView_detail_nom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="84dp"
+                android:text="nom de la reunion"
+                android:textSize="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

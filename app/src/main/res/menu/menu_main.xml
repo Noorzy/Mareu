@@ -7,5 +7,15 @@
         android:icon="@drawable/ic_filter_list_24dp"
         android:orderInCategory="100"
         android:title="Filters"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" >
+        <menu>
+            <item android:id="@+id/filter_by_room"
+                android:title="Filtre par salle"/>
+            <item android:id="@+id/filter_by_date"
+                android:title="filtre par date"/>
+
+
+        </menu>
+    </item>
+
 </menu>

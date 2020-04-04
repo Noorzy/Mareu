@@ -31,22 +31,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private ReunionApiService mApiService;
     private List<Reunion> mReunions;
-    public List<Reunion> reunionsFull;
     private MyReunionListRecyclerViewAdapter adapter;
     private Reunion newReunion;
-    private String filterString;
-    private String temp;
+
     public MyReunionListRecyclerViewAdapter myAdapter;
-
-    public SharedViewModel viewModel;
-
     public RecyclerView recyclerview;
     public DateFilterDialog dateDialog;
 
@@ -65,16 +62,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 dateDialog.show(getSupportFragmentManager(),"date dialog");
                 return true;
             case R.id.filter_by_date:
-                Toast.makeText(this,"Filtre par date",  Toast.LENGTH_SHORT).show();
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(), "date picker");
                 return true;
-
+            case R.id.filter_reset:
+                Toast.makeText(this,"Reset Filtre",  Toast.LENGTH_SHORT).show();
+                FilterList(null);
+                return true;
             default: return super.onOptionsItemSelected(item);
-
         }
-
-
     }
 
 
@@ -87,12 +83,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         recyclerview = (RecyclerView) findViewById(R.id.My_recyclerView);
         mReunions = mApiService.getReunions();
-
-
-
         myAdapter = new MyReunionListRecyclerViewAdapter(this, mReunions);
         recyclerview.setAdapter(myAdapter);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
@@ -104,16 +96,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             public void onClick(View v) {
                 Intent creationActivity = new Intent(v.getContext() , CreationActivity.class);
                 startActivity(creationActivity);
-
             }
         });
-        Log.d("onCreate", "onCreate Main activity called");
-
         dateDialog = new DateFilterDialog();
-
-
-
-
     }
 
     @Override
@@ -126,28 +111,20 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             myAdapter.UpdateReunionsfull(mReunions);
             newReunion = null;
         }
-        Log.d("tag3", "mReunions MainActivity size= "+ mReunions.size());
-
-        temp = getIntent().getStringExtra("filter_text");
-
-        Log.d("tag4", "temp = "+ temp);
-
-      // if (temp == null){
-      //     myAdapter.UpdateData(mReunions);
-      // }
-
-
-        myAdapter.getFilter().filter(temp);
-        myAdapter.notifyDataSetChanged();
-
-
-
-
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        FilterList(currentDateString);
+    }
 
+    public void FilterList(String constraint){
+        myAdapter.getFilter().filter(constraint);
     }
 
 

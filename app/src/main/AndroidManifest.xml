@@ -9,8 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.FilterActivity"
-            android:parentActivityName=".ui.MainActivity"></activity>
         <activity android:name=".ui.CreationActivity" />
         <activity android:name=".ui.DetailActivity"
             android:parentActivityName=".ui.MainActivity"/>

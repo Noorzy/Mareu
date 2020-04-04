@@ -116,6 +116,10 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
                 for (Reunion item : reunionsFull){
                     if (item.getRoom().toLowerCase().matches(filterPattern)){
                         filteredList.add(item);
+                    }else{
+                        if (item.getDate().toLowerCase().matches(filterPattern)){
+                            filteredList.add(item);
+                        }
                     }
                 }
             }

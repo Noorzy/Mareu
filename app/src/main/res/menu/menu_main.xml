@@ -13,6 +13,8 @@
                 android:title="Filtre par salle"/>
             <item android:id="@+id/filter_by_date"
                 android:title="filtre par date"/>
+            <item android:id="@+id/filter_reset"
+                android:title="Reset Filtre"/>
 
 
         </menu>

@@ -58,8 +58,6 @@ public class DateFilterDialog extends DialogFragment {
                        }
                     }
                 });
-
-
         return builder.create();
     }
 }

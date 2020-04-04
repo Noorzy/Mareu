@@ -40,12 +40,6 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         mReunions = items;
         mApiService = DI.getReunionApiService();
         reunionsFull = new ArrayList<>(mReunions);
-        Log.d("RecyclerViewAdapter", "Constructor Called");
-
-
-
-
-
     }
 
 
@@ -54,16 +48,11 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_row, parent, false);
-
-
-
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-
-
         final Reunion reunion = mReunions.get(position);
         holder.nomReunion.setText(reunion.getName() + " -");
         holder.nomSalle.setText( reunion.getRoom() + " -");
@@ -88,11 +77,6 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
                 UpdateReunionsfull(mApiService.getReunions());
             }
         });
-
-        Log.d("tag2", "mReunions size= "+ mReunions.size());
-        Log.d("tag", "ReunionsFull size= "+ reunionsFull.size());
-
-
     }
 
     @Override
@@ -133,7 +117,6 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             mReunions.clear();
             mReunions.addAll((List)results.values);
             notifyDataSetChanged();
-
         }
     };
 

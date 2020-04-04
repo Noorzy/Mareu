@@ -100,7 +100,7 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
                 Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
                 CharSequence toastText;
-                if (n.equals("") || d.equals("") || t.equals("") || e.equals("")){
+                if (n.equals("") || r.equals("") || d.equals("") || t.equals("") || e.equals("")){
                     toastText = "Veullez remplir tous les champs";
                     Toast toast = Toast.makeText(context, toastText, duration);
                     toast.show();

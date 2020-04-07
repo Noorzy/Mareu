@@ -139,8 +139,8 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
                 EmailValidator emailValidator = new EmailValidator();
                 if (emailValidator.validator(s)){
                     imageButton_add_email.setEnabled(true);
-                    //imageButton_add_email.setColorFilter(Color.parseColor("#27f178"));
-                    imageButton_add_email.setColorFilter(Color.GREEN);
+                    imageButton_add_email.setColorFilter(Color.parseColor("#008577"));
+                    //imageButton_add_email.setColorFilter(Color.GREEN);
                     textValidator.setTextColor(Color.parseColor("#5eba7d"));
                     textValidator.setText("Email Valide");
                 }else{
@@ -205,7 +205,7 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        String currentDateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
         Date= currentDateString;
         viewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
         viewModel.setDate(Date);

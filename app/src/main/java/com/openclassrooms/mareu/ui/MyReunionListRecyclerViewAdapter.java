@@ -3,6 +3,7 @@ package com.openclassrooms.mareu.ui;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -35,6 +36,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
 
 
 
+
     public MyReunionListRecyclerViewAdapter(Context ct, List<Reunion> items) {
         context = ct;
         mReunions = items;
@@ -61,20 +63,24 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         holder.myRowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent detailActivity = new Intent(v.getContext() , DetailActivity.class);
-                detailActivity.putExtra("selectedMeeting" , reunion);
-                v.getContext().startActivity(detailActivity);
+              // Intent detailActivity = new Intent(v.getContext() , DetailActivity.class);
+              // detailActivity.putExtra("selectedMeeting" , reunion);
+              // v.getContext().startActivity(detailActivity);
+                ((MainActivity)v.getContext()).ShowDetail(reunion);
+
+
             }
         });
         holder.imageButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mApiService.deleteReunion(reunion);
+                reunionsFull.remove(reunion);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, getItemCount());
                 //reunionsFull = new ArrayList<>(mReunions);
                 UpdateData(mApiService.getReunions());
-                UpdateReunionsfull(mApiService.getReunions());
+                //UpdateReunionsfull(mApiService.getReunions());
             }
         });
     }
@@ -117,6 +123,11 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             mReunions.clear();
             mReunions.addAll((List)results.values);
             notifyDataSetChanged();
+            if (mReunions.size() == 0){
+                ((MainActivity)context).ShowText();
+            }else{
+                ((MainActivity)context).HideText();
+            }
         }
     };
 

@@ -13,9 +13,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:ems="10"
+        android:hint="Nom de la Reunion"
         android:inputType="textPersonName"
         android:maxLength="17"
-        android:hint="Nom de la Reunion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,9 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="date"
-        android:hint="Date"
         android:focusable="false"
+        android:hint="Date"
+        android:inputType="date"
         app:layout_constraintStart_toStartOf="@+id/editText_name"
         app:layout_constraintTop_toBottomOf="@+id/editText_name" />
 
@@ -45,9 +45,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="time"
-        android:hint="Heure"
         android:focusable="false"
+        android:hint="Heure"
+        android:inputType="time"
         app:layout_constraintStart_toStartOf="@+id/editText_date"
         app:layout_constraintTop_toBottomOf="@+id/editText_date" />
 
@@ -57,8 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textEmailAddress"
         android:hint="Email Participant"
+        android:inputType="textEmailAddress"
         app:layout_constraintStart_toStartOf="@+id/editText_time"
         app:layout_constraintTop_toBottomOf="@+id/editText_time" />
 
@@ -68,7 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="gege.lebeau@gmail.com , adrien@gmail.com , caro@hotmail.fr "
-        app:layout_constraintStart_toStartOf="@+id/editText_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_validator" />
 
     <ImageButton
@@ -94,18 +95,22 @@
         android:id="@+id/button_creation_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
         android:layout_marginTop="80dp"
+        android:layout_marginEnd="121dp"
+        android:background="@color/colorPrimary"
         android:text="OK"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_email" />
 
     <Button
         android:id="@+id/button_creation_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
+        android:layout_marginStart="32dp"
+        android:background="@color/colorPrimary"
         android:text="Annuler"
-        app:layout_constraintStart_toEndOf="@+id/button_creation_ok"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/button_creation_ok" />
 </androidx.constraintlayout.widget.ConstraintLayout>

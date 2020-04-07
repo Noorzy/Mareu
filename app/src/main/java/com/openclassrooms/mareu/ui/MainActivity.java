@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public MyReunionListRecyclerViewAdapter myAdapter;
     public RecyclerView recyclerview;
     public DateFilterDialog dateDialog;
+    private DetailDialog detailDialog;
+    private TextView textNoMeeting;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.addItemDecoration(new DividerItemDecoration(recyclerview.getContext(), DividerItemDecoration.VERTICAL));
 
+        textNoMeeting = findViewById(R.id.textView_no_meeting);
+
         FloatingActionButton fab  = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        String currentDateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
         FilterList(currentDateString);
     }
 
@@ -127,6 +132,18 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         myAdapter.getFilter().filter(constraint);
     }
 
+    public void ShowDetail(Reunion reunion){
+        DetailDialog detailDialog = DetailDialog.newInstance(reunion);
+        detailDialog.show(getSupportFragmentManager(), "detail dialog");
+    }
+
+    public void ShowText(){
+        textNoMeeting.setVisibility(TextView.VISIBLE);
+    }
+
+    public void HideText(){
+        textNoMeeting.setVisibility(TextView.INVISIBLE);
+    }
 
     //   public void initList(){
  //      mReunions = mApiService.getReunions();

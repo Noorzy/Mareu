@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class DateFilterDialog extends DialogFragment {
+public class RoomFilterDialog extends DialogFragment {
 
     @NonNull
     @Override

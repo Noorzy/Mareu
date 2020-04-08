@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     public MyReunionListRecyclerViewAdapter myAdapter;
     public RecyclerView recyclerview;
-    public DateFilterDialog dateDialog;
+    public RoomFilterDialog roomDialog;
     private DetailDialog detailDialog;
     private TextView textNoMeeting;
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         switch (item.getItemId()){
             case R.id.filter_by_room:
                 Toast.makeText(this,"Filtre par salle",  Toast.LENGTH_SHORT).show();
-                dateDialog.show(getSupportFragmentManager(),"date dialog");
+                roomDialog.show(getSupportFragmentManager(),"room dialog");
                 return true;
             case R.id.filter_by_date:
                 DialogFragment datePicker = new DatePickerFragment();
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 startActivity(creationActivity);
             }
         });
-        dateDialog = new DateFilterDialog();
+        roomDialog = new RoomFilterDialog();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         newReunion = getIntent().getParcelableExtra("new_meeting");
         if (newReunion != null) {
             if (mReunions.contains(newReunion) == false) {
-                mReunions.add(newReunion);
+                mApiService.addReunion(newReunion);
                 myAdapter.UpdateData(mReunions);
                 myAdapter.UpdateReunionsfull(mReunions);
                 newReunion = null;

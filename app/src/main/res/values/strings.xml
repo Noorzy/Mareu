@@ -138,7 +138,7 @@
         <item>Salle D</item>
     </string-array>
     <string-array name="rooms">
-        <item></item>
+        <item>Salle...</item>
         <item>Salle A</item>
         <item>Salle B</item>
         <item>Salle C</item>

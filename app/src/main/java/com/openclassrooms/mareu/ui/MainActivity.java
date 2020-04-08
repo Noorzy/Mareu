@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,21 +18,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.mareu.DI.DI;
 import com.openclassrooms.mareu.R;
 import com.openclassrooms.mareu.models.Reunion;
-import com.openclassrooms.mareu.models.SharedViewModel;
 import com.openclassrooms.mareu.service.ReunionApiService;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -111,10 +107,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onStart();
         newReunion = getIntent().getParcelableExtra("new_meeting");
         if (newReunion != null) {
-            mReunions.add(newReunion);
-            myAdapter.UpdateData(mReunions);
-            myAdapter.UpdateReunionsfull(mReunions);
-            newReunion = null;
+            if (mReunions.contains(newReunion) == false) {
+                mReunions.add(newReunion);
+                myAdapter.UpdateData(mReunions);
+                myAdapter.UpdateReunionsfull(mReunions);
+                newReunion = null;
+            }
         }
     }
 
@@ -145,10 +143,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         textNoMeeting.setVisibility(TextView.INVISIBLE);
     }
 
-    //   public void initList(){
- //      mReunions = mApiService.getReunions();
- //      recyclerview.setAdapter(new MyReunionListRecyclerViewAdapter(this, mReunions));
- //
- //  }
+
 
 }

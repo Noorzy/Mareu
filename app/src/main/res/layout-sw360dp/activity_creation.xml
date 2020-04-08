@@ -10,7 +10,7 @@
         android:id="@+id/editText_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Nom de la Reunion"
@@ -23,8 +23,8 @@
         android:id="@+id/room_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toEndOf="@+id/editText_name"
         app:layout_constraintTop_toTopOf="@+id/editText_name" />
 
     <EditText
@@ -67,8 +67,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:paddingRight="8dp"
-        android:paddingLeft="8dp"
         android:text="gege.lebeau@gmail.com , adrien@gmail.com , caro@hotmail.fr "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="121dp"
         android:background="@color/colorPrimary"
         android:text="OK"
         android:textColor="#ffffff"

@@ -92,15 +92,15 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String n = (textName.getText().toString());
-                String r = roomSelected ;
-                String d = (textDate.getText().toString());
-                String t = (textTime.getText().toString());
-                String e = (textViewEmail.getText().toString());
+                String n = (textName.getText().toString());             //nom réunion
+                String r = roomSelected ;                               //Salle
+                String d = (textDate.getText().toString());             //Dâte
+                String t = (textTime.getText().toString());             //Heure
+                String e = (textViewEmail.getText().toString());        //Emails
                 Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
                 CharSequence toastText;
-                if (n.equals("") || r.equals("") || d.equals("") || t.equals("") || e.equals("")){
+                if (n.equals("") || r.equals("") || r.equals("Salle...")|| d.equals("") || t.equals("") || e.equals("")){
                     toastText = "Veullez remplir tous les champs";
                     Toast toast = Toast.makeText(context, toastText, duration);
                     toast.show();
@@ -140,7 +140,6 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
                 if (emailValidator.validator(s)){
                     imageButton_add_email.setEnabled(true);
                     imageButton_add_email.setColorFilter(Color.parseColor("#008577"));
-                    //imageButton_add_email.setColorFilter(Color.GREEN);
                     textValidator.setTextColor(Color.parseColor("#5eba7d"));
                     textValidator.setText("Email Valide");
                 }else{

@@ -3,12 +3,9 @@ package com.openclassrooms.mareu.ui;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +60,6 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         holder.myRowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              // Intent detailActivity = new Intent(v.getContext() , DetailActivity.class);
-              // detailActivity.putExtra("selectedMeeting" , reunion);
-              // v.getContext().startActivity(detailActivity);
                 ((MainActivity)v.getContext()).ShowDetail(reunion);
 
 
@@ -78,9 +72,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
                 reunionsFull.remove(reunion);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, getItemCount());
-                //reunionsFull = new ArrayList<>(mReunions);
                 UpdateData(mApiService.getReunions());
-                //UpdateReunionsfull(mApiService.getReunions());
             }
         });
     }

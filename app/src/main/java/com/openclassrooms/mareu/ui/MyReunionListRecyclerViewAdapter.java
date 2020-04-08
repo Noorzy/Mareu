@@ -26,7 +26,7 @@ import java.util.List;
 public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReunionListRecyclerViewAdapter.MyViewHolder> implements Filterable {
     Context context;
     public List<Reunion> mReunions;
-    private  List<Reunion> reunionsFull;
+    public  List<Reunion> reunionsFull;
     private ReunionApiService mApiService;
 
 

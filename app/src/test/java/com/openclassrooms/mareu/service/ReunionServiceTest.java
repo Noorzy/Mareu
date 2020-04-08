@@ -2,8 +2,6 @@ package com.openclassrooms.mareu.service;
 
 import com.openclassrooms.mareu.DI.DI;
 import com.openclassrooms.mareu.models.Reunion;
-import com.openclassrooms.mareu.service.DummyReunionGenerator;
-import com.openclassrooms.mareu.service.ReunionApiService;
 
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
@@ -11,13 +9,11 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
+
 public class ReunionServiceTest {
     private ReunionApiService service;
 

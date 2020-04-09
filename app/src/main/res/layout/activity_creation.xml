@@ -6,6 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.CreationActivity">
 
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText_date"
+        app:srcCompat="@drawable/ic_today_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText_time"
+        app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText_email"
+        app:srcCompat="@drawable/ic_email_black_24dp" />
+
     <EditText
         android:id="@+id/editText_name"
         android:layout_width="wrap_content"
@@ -31,12 +61,13 @@
         android:id="@+id/editText_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:focusable="false"
         android:hint="Date"
         android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/editText_name"
+        app:layout_constraintStart_toEndOf="@+id/imageView14"
         app:layout_constraintTop_toBottomOf="@+id/editText_name" />
 
     <EditText

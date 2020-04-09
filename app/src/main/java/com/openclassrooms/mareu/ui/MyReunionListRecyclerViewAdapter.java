@@ -6,12 +6,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.openclassrooms.mareu.DI.DI;
@@ -75,6 +77,8 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
                 UpdateData(mApiService.getReunions());
             }
         });
+        String circleColor = assignRoomColor(holder.nomSalle.getText().toString());
+        holder.roomCircle.setColorFilter(Color.parseColor(circleColor));
     }
 
     @Override
@@ -129,6 +133,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         ConstraintLayout myRowLayout;
         ImageButton imageButtonDelete;
         CardView myRowCardview;
+        ImageView roomCircle;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -140,6 +145,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             myRowLayout = itemView.findViewById(R.id.my_row_layout);
             imageButtonDelete = itemView.findViewById(R.id.imageButton_delete);
             myRowCardview = itemView.findViewById(R.id.my_row_cardview);
+            roomCircle = itemView.findViewById(R.id.imageView);
 
 
         }
@@ -156,6 +162,45 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         reunionsFull.addAll(data);
         notifyDataSetChanged();
 
+    }
+
+    public String assignRoomColor(String roomName){
+        String color = null;
+        switch (roomName){
+            case "Salle A -":
+                color = "#edd9d0";
+                return color;
+            case "Salle B -":
+                color = "#aeceb8";
+                return color;
+            case "Salle C -":
+                color = "#dcf4a9";
+                return color;
+            case "Salle D -":
+                color = "#84d0f3";
+                return color;
+            case "Salle E -":
+                color = "#a884f3";
+                return color;
+            case "Salle F -":
+                color = "#ffffbb";
+                return color;
+            case "Salle G -":
+                color = "#f3a9dd";
+                return color;
+            case "Salle H -":
+                color = "#ffae8a";
+                return color;
+            case "Salle I -":
+                color = "#868686";
+                return color;
+            case "Salle J -":
+                color = "#6a6aff";
+                return color;
+            default:
+                color = "#ffffff";
+                return color;
+        }
     }
 }
 

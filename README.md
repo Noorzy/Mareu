@@ -1,5 +1,5 @@
 # Mareu
-OpenClassrooms Projet 4
+OpenClassrooms Project 4
 
 ## General Info
 This repository contains the source code of **Mareu** the fourth project of Openclassrooms's android development course.

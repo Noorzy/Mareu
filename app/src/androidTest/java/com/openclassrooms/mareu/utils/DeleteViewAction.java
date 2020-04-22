@@ -1,6 +1,5 @@
 package com.openclassrooms.mareu.utils;
 
-
 import android.view.View;
 
 

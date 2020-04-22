@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 
-
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,4 @@ public class TimePickerFragment extends DialogFragment {
         int minute = c.get(Calendar.MINUTE);
         return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener)  getActivity(), hour, minute, DateFormat.is24HourFormat(getActivity()));
     }
-
-
-
 }

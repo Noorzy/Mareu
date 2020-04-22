@@ -35,7 +35,6 @@ public class DetailDialog extends DialogFragment {
         return detailDialog;
     }
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -64,7 +63,6 @@ public class DetailDialog extends DialogFragment {
                 dismiss();
             }
         });
-
 
         return builder.create();
     }

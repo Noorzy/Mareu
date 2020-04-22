@@ -1,10 +1,14 @@
-package com.openclassrooms.mareu.ui;
+/*
+    Mareu - Application de gestion de réunions
+    OpenClassrooms DA Projet 4
 
+ */
+
+package com.openclassrooms.mareu.ui;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,37 +17,32 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.mareu.DI.DI;
 import com.openclassrooms.mareu.R;
 import com.openclassrooms.mareu.models.Reunion;
 import com.openclassrooms.mareu.service.ReunionApiService;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private ReunionApiService mApiService;
     private List<Reunion> mReunions;
-    private MyReunionListRecyclerViewAdapter adapter;
     private Reunion newReunion;
 
     public MyReunionListRecyclerViewAdapter myAdapter;
     public RecyclerView recyclerview;
     public RoomFilterDialog roomDialog;
-    private DetailDialog detailDialog;
     private TextView textNoMeeting;
 
     @Override
@@ -81,16 +80,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+                                                                                                    //region RecyclerView
         recyclerview = (RecyclerView) findViewById(R.id.My_recyclerView);
         mReunions = mApiService.getReunions();
-        myAdapter = new MyReunionListRecyclerViewAdapter(this, mReunions);
+        myAdapter = new MyReunionListRecyclerViewAdapter( mReunions);
         recyclerview.setAdapter(myAdapter);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.addItemDecoration(new DividerItemDecoration(recyclerview.getContext(), DividerItemDecoration.VERTICAL));
-
+                                                                                                    //endregion
         textNoMeeting = findViewById(R.id.textView_no_meeting);
-
+                                                                                                    //region FAB
         FloatingActionButton fab  = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 startActivity(creationActivity);
             }
         });
+                                                                                                    //endregion
         roomDialog = new RoomFilterDialog();
     }
 
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {                   // Filter the List according to the Date picked in the DatePickerFragment
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
@@ -142,7 +142,5 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public void HideText(){
         textNoMeeting.setVisibility(TextView.INVISIBLE);
     }
-
-
 
 }

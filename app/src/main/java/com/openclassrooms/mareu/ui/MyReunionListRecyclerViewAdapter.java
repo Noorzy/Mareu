@@ -27,26 +27,22 @@ import java.util.List;
 
 public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReunionListRecyclerViewAdapter.MyViewHolder> implements Filterable {
     Context context;
-    public List<Reunion> mReunions;
-    public  List<Reunion> reunionsFull;
+    List<Reunion> mReunions;
+    List<Reunion> reunionsFull;
     private ReunionApiService mApiService;
 
 
+    public MyReunionListRecyclerViewAdapter( List<Reunion> items) {
 
-
-
-
-    public MyReunionListRecyclerViewAdapter(Context ct, List<Reunion> items) {
-        context = ct;
         mReunions = items;
         mApiService = DI.getReunionApiService();
         reunionsFull = new ArrayList<>(mReunions);
     }
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_row, parent, false);
         return new MyViewHolder(view);
@@ -59,7 +55,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         holder.nomSalle.setText( reunion.getRoom() + " -");
         holder.timeReunion.setText(reunion.getTime());
         holder.emails.setText(reunion.getEmails());
-        holder.myRowLayout.setOnClickListener(new View.OnClickListener() {
+        holder.myRowLayout.setOnClickListener(new View.OnClickListener() {                          // Show DetailDialog on Click
             @Override
             public void onClick(View v) {
                 ((MainActivity)v.getContext()).ShowDetail(reunion);
@@ -67,7 +63,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
 
             }
         });
-        holder.imageButtonDelete.setOnClickListener(new View.OnClickListener() {
+        holder.imageButtonDelete.setOnClickListener(new View.OnClickListener() {                    // Delete a meeting and update the List
             @Override
             public void onClick(View v) {
                 mApiService.deleteReunion(reunion);
@@ -77,7 +73,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
                 UpdateData(mApiService.getReunions());
             }
         });
-        String circleColor = assignRoomColor(holder.nomSalle.getText().toString());
+        String circleColor = assignRoomColor(holder.nomSalle.getText().toString());                 //change the color of the circle according to the room name
         holder.roomCircle.setColorFilter(Color.parseColor(circleColor));
     }
 
@@ -91,7 +87,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         return reunionsFilter;
     }
 
-    private Filter reunionsFilter = new Filter() {
+    private Filter reunionsFilter = new Filter() {                                                  // Filter Logic
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Reunion> filteredList = new ArrayList<>();
@@ -100,10 +96,10 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             }else{
                 String filterPattern = constraint.toString().toLowerCase();
                 for (Reunion item : reunionsFull){
-                    if (item.getRoom().toLowerCase().matches(filterPattern)){
+                    if (item.getRoom().toLowerCase().matches(filterPattern)){                       // Filter by room
                         filteredList.add(item);
                     }else{
-                        if (item.getDate().toLowerCase().matches(filterPattern)){
+                        if (item.getDate().toLowerCase().matches(filterPattern)){                   // Filter by date
                             filteredList.add(item);
                         }
                     }
@@ -128,7 +124,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
     };
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView nomReunion, nomSalle, timeReunion, emails;
         ConstraintLayout myRowLayout;
         ImageButton imageButtonDelete;
@@ -136,7 +132,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         ImageView roomCircle;
 
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             nomReunion = itemView.findViewById(R.id.nom_reunion);
             nomSalle = itemView.findViewById(R.id.salle_reunion);
@@ -146,25 +142,21 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             imageButtonDelete = itemView.findViewById(R.id.imageButton_delete);
             myRowCardview = itemView.findViewById(R.id.my_row_cardview);
             roomCircle = itemView.findViewById(R.id.imageView);
-
-
         }
     }
-    public void UpdateData(List<Reunion> data){
+    void UpdateData(List<Reunion> data){                                                     //update mReunions (filtered List)
         mReunions = new ArrayList<>();
         mReunions.addAll(data);
         notifyDataSetChanged();
-
-
     }
-    public void UpdateReunionsfull(List<Reunion> data){
+
+    void UpdateReunionsfull(List<Reunion> data){                                             //update reunionFull (Full List)
         reunionsFull = new ArrayList<>();
         reunionsFull.addAll(data);
         notifyDataSetChanged();
-
     }
 
-    public String assignRoomColor(String roomName){
+    private String assignRoomColor(String roomName){                                                 //Method to change the circle color
         String color = null;
         switch (roomName){
             case "Salle A -":

@@ -1,10 +1,5 @@
 package com.openclassrooms.mareu.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -18,34 +13,33 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.openclassrooms.mareu.R;
 import com.openclassrooms.mareu.models.Reunion;
 import com.openclassrooms.mareu.models.SharedViewModel;
 import com.openclassrooms.mareu.service.EmailValidator;
-import com.openclassrooms.mareu.service.ReunionApiService;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 
 public class CreationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
-    private MyReunionListRecyclerViewAdapter adapter;
-    private List<Reunion> mReunions;
-    private ReunionApiService mApiService;
     private SharedViewModel viewModel;
     private Reunion reunion;
-    private EditText textName;
-    private EditText textTime;
-    private EditText textDate;
-    private EditText textMail;
-    private TextView textValidator;
+
+
+
     private ImageButton imageButton_add_email;
     private TextView textViewEmail;
     private Button okButton;
@@ -53,21 +47,25 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
     public String roomSelected;
     public String Date = null;
     public String Time = null;
-
+    private TextInputLayout textInputName;
+    private TextInputLayout textInputEmail;
+    private TextInputLayout textInputDate;
+    private TextInputLayout textInputTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation);
         okButton = (Button) findViewById(R.id.button_creation_ok);
         cancelButton = (Button) findViewById(R.id.button_creation_cancel);
-        textName = (EditText) findViewById(R.id.editText_name);
-        textDate = (EditText) findViewById(R.id.editText_date);
-        textTime = (EditText) findViewById(R.id.editText_time);
 
-        textDate.setOnClickListener(new View.OnClickListener() {
+
+        textInputName = (TextInputLayout) findViewById(R.id.text_input_name);
+        textInputEmail= (TextInputLayout) findViewById(R.id.text_input_email);
+        textInputDate = (TextInputLayout) findViewById(R.id.text_input_date);
+        textInputTime = (TextInputLayout) findViewById(R.id.text_input_time);
+
+        textInputDate.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datePicker = new DatePickerFragment();
@@ -75,11 +73,14 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
             }
         });
 
-        textTime.setOnClickListener(new View.OnClickListener() {
+
+
+        textInputTime.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment timePicker = new TimePickerFragment();
                 timePicker.show(getSupportFragmentManager(), "time picker");
+
             }
         });
 
@@ -92,15 +93,16 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String n = (textName.getText().toString());             //nom réunion
-                String r = roomSelected ;                               //Salle
-                String d = (textDate.getText().toString());             //Dâte
-                String t = (textTime.getText().toString());             //Heure
-                String e = (textViewEmail.getText().toString());        //Emails
+
+                String n =(textInputName.getEditText().getText().toString());                       //nom réunion
+                String r = roomSelected ;                                                           //Salle
+                String d = (textInputDate.getEditText().getText().toString());                      //Date
+                String t = (textInputTime.getEditText().getText().toString());                      //Heure
+                String e = (textViewEmail.getText().toString());                                    //Emails
                 Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
                 CharSequence toastText;
-                if (n.equals("") || r.equals("") || r.equals("Salle...")|| d.equals("") || t.equals("") || e.equals("")){
+                if (!validateName() | r.equals("") | r.equals("Salle...")| !validateDate() | !validateTime() | e.equals("")){
                     toastText = "Veullez remplir tous les champs";
                     Toast toast = Toast.makeText(context, toastText, duration);
                     toast.show();
@@ -125,10 +127,10 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
 
         textViewEmail = (TextView) findViewById(R.id.textView_email);
         imageButton_add_email = (ImageButton) findViewById(R.id.imageButton_add_email);
-        textValidator = (TextView) findViewById(R.id.textView_validator);
-        textMail = (EditText) findViewById(R.id.editText_email);
+        imageButton_add_email.setEnabled(false);
 
-        textMail.addTextChangedListener(new TextWatcher() {
+
+        textInputEmail.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -140,30 +142,33 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
                 if (emailValidator.validator(s)){
                     imageButton_add_email.setEnabled(true);
                     imageButton_add_email.setColorFilter(Color.parseColor("#008577"));
-                    textValidator.setTextColor(Color.parseColor("#5eba7d"));
-                    textValidator.setText("Email Valide");
+                    textInputEmail.setError(null);
+
                 }else{
+
                     imageButton_add_email.setEnabled(false);
                     imageButton_add_email.setColorFilter(Color.parseColor("#b4b4b4"));
-                    textValidator.setTextColor(Color.parseColor("#cc0000"));
-                    textValidator.setText("Email Invalide");
+                    textInputEmail.setError("Email Invalide");
                 }
-
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                 if (textInputEmail.getEditText().getText() == null){
+                    textInputEmail.setError(null);
+                }
 
             }
         });
+
         imageButton_add_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (textValidator.getText() == "Email Valide"){
+                if (textInputEmail.getError() == null){
                     String temptxt = textViewEmail.getText().toString();
-                    textViewEmail.setText(textMail.getText() + " , " + temptxt   );
-                    textMail.setText(null);
+                    textViewEmail.setText(textInputEmail.getEditText().getText() + " , " + temptxt);
+                    textInputEmail.getEditText().setText(null);
+                    textInputEmail.setError(null);
                 }
             }
         });
@@ -176,14 +181,13 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
         viewModel.getDate().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                textDate.setText(s);
+                textInputDate.getEditText().setText(s);
             }
         });
         viewModel.getTime().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                textTime.setText(s);
-
+                textInputTime.getEditText().setText(s);
             }
         });
     }
@@ -195,7 +199,6 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     @Override
@@ -215,9 +218,40 @@ public class CreationActivity extends AppCompatActivity implements AdapterView.O
         Time = checkDigit(hourOfDay) + "H"+ checkDigit(minute);
         viewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
         viewModel.setTime(Time);
-
     }
     public String checkDigit(int number) {
         return number <= 9 ? "0" + number : String.valueOf(number);
+    }
+
+    private boolean validateName(){
+        String nameInput = (textInputName.getEditText().getText().toString());
+        if (nameInput.isEmpty()){
+            textInputName.setError("Veuillez remplir le champ");
+            return false;
+        }else{
+            textInputName.setError(null);
+            return true;
+        }
+    }
+    private boolean validateDate(){
+        String dateInput = (textInputDate.getEditText().getText().toString());
+        if (dateInput.isEmpty()){
+            textInputDate.setError("Veuillez choisir une date");
+            return false;
+        }else{
+            textInputDate.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateTime(){
+        String timeInput = (textInputTime.getEditText().getText().toString());
+        if (timeInput.isEmpty()){
+            textInputTime.setError("Veuillez choisir une heure");
+            return false;
+        }else{
+            textInputTime.setError(null);
+            return true;
+        }
     }
 }

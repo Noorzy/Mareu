@@ -8,6 +8,7 @@ package com.openclassrooms.mareu.ui;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
@@ -72,6 +74,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mApiService = DI.getNewInstanceApiService();
+        mReunions = mApiService.getReunions();
+        myAdapter.notifyDataSetChanged();
+        myAdapter = new MyReunionListRecyclerViewAdapter( mReunions);
+        myAdapter.notifyDataSetChanged();
+        recyclerview.setAdapter(myAdapter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +119,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onStart();
         newReunion = getIntent().getParcelableExtra("new_meeting");
         if (newReunion != null) {
-            if (mReunions.contains(newReunion) == false) {
+            if (!mReunions.contains(newReunion)) {
                 mApiService.addReunion(newReunion);
-                myAdapter.UpdateData(mReunions);
-                myAdapter.UpdateReunionsfull(mReunions);
+                //mReunions.add(newReunion);
+                myAdapter.updateData(mReunions);
+                myAdapter.updateReunionsfull(mReunions);
                 newReunion = null;
             }
         }

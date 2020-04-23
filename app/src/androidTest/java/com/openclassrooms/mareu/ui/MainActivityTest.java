@@ -245,7 +245,8 @@ public class MainActivityTest {
                         childAtPosition(
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 3)));
-        recyclerView.perform(actionOnItemAtPosition(11, click()));
+        int pos = mActivity.myAdapter.mReunions.size() ;
+        recyclerView.perform(actionOnItemAtPosition(pos, click()));
 
         onView(Matchers.allOf(withId(R.id.textView_detail_nom),isDisplayed()))
                 .check(matches(withText("Tigrou")));
@@ -256,6 +257,8 @@ public class MainActivityTest {
         onView(Matchers.allOf(withId(R.id.textView_detail_emails), isDisplayed()))
                 .check(matches(withText("tigrou@gmail.com" + " , ")));
     }
+
+
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 

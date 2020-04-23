@@ -70,7 +70,8 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
                 reunionsFull.remove(reunion);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, getItemCount());
-                UpdateData(mApiService.getReunions());
+                updateData(mApiService.getReunions());
+
             }
         });
         String circleColor = assignRoomColor(holder.nomSalle.getText().toString());                 //change the color of the circle according to the room name
@@ -144,13 +145,13 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             roomCircle = itemView.findViewById(R.id.imageView);
         }
     }
-    void UpdateData(List<Reunion> data){                                                     //update mReunions (filtered List)
+    void updateData(List<Reunion> data){                                                     //update mReunions (filtered List)
         mReunions = new ArrayList<>();
         mReunions.addAll(data);
         notifyDataSetChanged();
     }
 
-    void UpdateReunionsfull(List<Reunion> data){                                             //update reunionFull (Full List)
+    void updateReunionsfull(List<Reunion> data){                                             //update reunionFull (Full List)
         reunionsFull = new ArrayList<>();
         reunionsFull.addAll(data);
         notifyDataSetChanged();

@@ -23,37 +23,37 @@ public class RoomFilterDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                        switch(which){
                            case 1:
-                               ((MainActivity) getActivity()).FilterList("salle a");
+                               ((MainActivity) getActivity()).filterList("salle a");
                                return;
                            case 2:
-                               ((MainActivity) getActivity()).FilterList("salle b");
+                               ((MainActivity) getActivity()).filterList("salle b");
                                return;
                            case 3:
-                               ((MainActivity) getActivity()).FilterList("salle c");
+                               ((MainActivity) getActivity()).filterList("salle c");
                                return;
                            case 4:
-                               ((MainActivity) getActivity()).FilterList("salle d");
+                               ((MainActivity) getActivity()).filterList("salle d");
                                return;
                            case 5:
-                               ((MainActivity) getActivity()).FilterList("salle e");
+                               ((MainActivity) getActivity()).filterList("salle e");
                                return;
                            case 6:
-                               ((MainActivity) getActivity()).FilterList("salle f");
+                               ((MainActivity) getActivity()).filterList("salle f");
                                return;
                            case 7:
-                               ((MainActivity) getActivity()).FilterList("salle g");
+                               ((MainActivity) getActivity()).filterList("salle g");
                                return;
                            case 8:
-                               ((MainActivity) getActivity()).FilterList("salle h");
+                               ((MainActivity) getActivity()).filterList("salle h");
                                return;
                            case 9:
-                               ((MainActivity) getActivity()).FilterList("salle i");
+                               ((MainActivity) getActivity()).filterList("salle i");
                                return;
                            case 10:
-                               ((MainActivity) getActivity()).FilterList("salle j");
+                               ((MainActivity) getActivity()).filterList("salle j");
                                return;
                            default:
-                               ((MainActivity) getActivity()).FilterList("");
+                               ((MainActivity) getActivity()).filterList("");
                                return;
                        }
                     }

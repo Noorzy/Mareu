@@ -55,14 +55,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
         holder.nomSalle.setText( reunion.getRoom() + " -");
         holder.timeReunion.setText(reunion.getTime());
         holder.emails.setText(reunion.getEmails());
-        holder.myRowLayout.setOnClickListener(new View.OnClickListener() {                          // Show DetailDialog on Click
-            @Override
-            public void onClick(View v) {
-                ((MainActivity)v.getContext()).ShowDetail(reunion);
 
-
-            }
-        });
         holder.imageButtonDelete.setOnClickListener(new View.OnClickListener() {                    // Delete a meeting and update the List
             @Override
             public void onClick(View v) {
@@ -117,9 +110,9 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             mReunions.addAll((List)results.values);
             notifyDataSetChanged();
             if (mReunions.size() == 0){
-                ((MainActivity)context).ShowText();
+                ((MainActivity)context).showText();
             }else{
-                ((MainActivity)context).HideText();
+                ((MainActivity)context).hideText();
             }
         }
     };
@@ -145,6 +138,7 @@ public class MyReunionListRecyclerViewAdapter extends RecyclerView.Adapter<MyReu
             roomCircle = itemView.findViewById(R.id.imageView);
         }
     }
+
     void updateData(List<Reunion> data){                                                     //update mReunions (filtered List)
         mReunions = new ArrayList<>();
         mReunions.addAll(data);

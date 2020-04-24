@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 return true;
             case R.id.filter_reset:
                 Toast.makeText(this,"Reset Filtre",  Toast.LENGTH_SHORT).show();
-                FilterList(null);
+                filterList(null);
                 return true;
             default: return super.onOptionsItemSelected(item);
         }
@@ -92,14 +92,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-                                                                                                    //region RecyclerView
-        recyclerview = (RecyclerView) findViewById(R.id.My_recyclerView);
-        mReunions = mApiService.getReunions();
-        myAdapter = new MyReunionListRecyclerViewAdapter( mReunions);
-        recyclerview.setAdapter(myAdapter);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        recyclerview.addItemDecoration(new DividerItemDecoration(recyclerview.getContext(), DividerItemDecoration.VERTICAL));
-                                                                                                    //endregion
+
+        initRecyclerView();
+
         textNoMeeting = findViewById(R.id.textView_no_meeting);
                                                                                                     //region FAB
         FloatingActionButton fab  = (FloatingActionButton) findViewById(R.id.floatingActionButton);
@@ -121,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         if (newReunion != null) {
             if (!mReunions.contains(newReunion)) {
                 mApiService.addReunion(newReunion);
-                //mReunions.add(newReunion);
                 myAdapter.updateData(mReunions);
                 myAdapter.updateReunionsfull(mReunions);
                 newReunion = null;
@@ -136,24 +130,28 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         String currentDateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
-        FilterList(currentDateString);
+        filterList(currentDateString);
     }
 
-    public void FilterList(String constraint){
+    public void filterList(String constraint){
         myAdapter.getFilter().filter(constraint);
     }
 
-    public void ShowDetail(Reunion reunion){
-        DetailDialog detailDialog = DetailDialog.newInstance(reunion);
-        detailDialog.show(getSupportFragmentManager(), "detail dialog");
-    }
-
-    public void ShowText(){
+    public void showText(){
         textNoMeeting.setVisibility(TextView.VISIBLE);
     }
 
-    public void HideText(){
+    public void hideText(){
         textNoMeeting.setVisibility(TextView.INVISIBLE);
+    }
+
+    private void initRecyclerView(){
+        recyclerview = (RecyclerView) findViewById(R.id.My_recyclerView);
+        mReunions = mApiService.getReunions();
+        myAdapter = new MyReunionListRecyclerViewAdapter( mReunions);
+        recyclerview.setAdapter(myAdapter);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview.addItemDecoration(new DividerItemDecoration(recyclerview.getContext(), DividerItemDecoration.VERTICAL));
     }
 
 }

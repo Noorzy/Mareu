@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -60,7 +61,7 @@ public class MainActivityTest {
 
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<MainActivity>(MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
 
     @Before
@@ -240,22 +241,14 @@ public class MainActivityTest {
                         isDisplayed()));
         appCompatButton3.perform(click());
 
-        ViewInteraction recyclerView = onView(
-                Matchers.allOf(withId(R.id.My_recyclerView),
-                        childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                3)));
-        int pos = mActivity.myAdapter.mReunions.size() ;
-        recyclerView.perform(actionOnItemAtPosition(pos, click()));
-
-        onView(Matchers.allOf(withId(R.id.textView_detail_nom),isDisplayed()))
-                .check(matches(withText("Tigrou")));
-        onView(Matchers.allOf(withId(R.id.textView_detail_date), isDisplayed()))
-                .check(matches(withText("12 avr. 2020")));
-        onView(Matchers.allOf(withId(R.id.textView_detail_time), isDisplayed()))
-                .check(matches(withText("15H30")));
-        onView(Matchers.allOf(withId(R.id.textView_detail_emails), isDisplayed()))
-                .check(matches(withText("tigrou@gmail.com" + " , ")));
+        onView(allOf(withId(R.id.My_recyclerView), isDisplayed()))
+                .check(matches(atPosition(0, hasDescendant(withText("service marketing -")))));
+        onView(withId(R.id.My_recyclerView))
+                .perform(RecyclerViewActions.scrollTo(hasDescendant(withText("Tigrou -"))))
+                .check(matches(hasDescendant(withText("Tigrou -"))))
+                .check(matches(hasDescendant(withText("Salle G -"))))
+                .check(matches(hasDescendant(withText("15H30"))))
+                .check(matches(hasDescendant(withText("tigrou@gmail.com , "))));
     }
 
 
